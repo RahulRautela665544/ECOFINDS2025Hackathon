@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <img class="big" src="{{ p.image_url }}" alt="image" onerror="this.src='/static/img/placeholder.png'"/>
+  <h2>{{ p.title }}</h2>
+  <p class="muted">{{ p.category }}</p>
+  <h3>₹{{ '%.2f'|format(p.price) }}</h3>
+  <p>{{ p.description }}</p>
+  {% if session.get('user_id') and p.user_id != session.get('user_id') %}
+  <form method="post" action="{{ url_for('cart_add', pid=p.id) }}">
+    <button>Add to Cart</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Cart</h2>
+<div class="list">
+  {% for ci, p in rows %}
+    <div class="row card">
+      <div class="flex">
+        <img src="{{ p.image_url }}" alt="" width="80" onerror="this.src='/static/img/placeholder.png'"/>
+        <div>
+          <div class="title">{{ p.title }}</div>
+          <div>Qty: {{ ci.qty }} • Price: ₹{{ '%.2f'|format(p.price) }}</div>
+        </div>
+      </div>
+      <form method="post" action="{{ url_for('cart_remove', cid=ci.id) }}"><button class="danger">Remove</button></form>
+    </div>
+  {% else %}
+    <p>Cart is empty.</p>
+  {% endfor %}
+</div>
+{% if rows %}
+<form method="post" action="{{ url_for('checkout') }}"><button>Checkout</button></form>
+<p class="total">Total: ₹{{ '%.2f'|format(total) }}</p>
+{% endif %}
+{% endblock %}

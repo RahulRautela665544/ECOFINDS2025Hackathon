@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>User Dashboard</h2>
+<form method="post" class="card form">
+  <label>Username <input name="username" value="{{ user.username }}" required></label>
+  <label>Email <input name="email" type="email" value="{{ user.email }}" required></label>
+  <button>Save</button>
+</form>
+{% endblock %}

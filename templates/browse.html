@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Browse Listings</h2>
+<div class="grid">
+  {% for p in items %}
+  <a class="card item" href="{{ url_for('product_detail', pid=p.id) }}">
+    <img src="{{ p.image_url }}" alt="image" onerror="this.src='/static/img/placeholder.png'"/>
+    <div class="title">{{ p.title }}</div>
+    <div class="meta">
+      <span>₹{{ '%.2f'|format(p.price) }}</span>
+      <span class="cat">{{ p.category }}</span>
+    </div>
+  </a>
+  {% else %}
+    <p>No items found.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EcoFinds</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+<header class="nav">
+  <a href="/">EcoFinds</a>
+  <form action="/" method="get" class="search">
+    <input name="q" value="{{ q or '' }}" placeholder="Search by title"/>
+    <select name="category">
+      <option value="">All Categories</option>
+      {% for c in categories or [] %}
+        <option value="{{c}}" {% if sel_category==c %}selected{% endif %}>{{c}}</option>
+      {% endfor %}
+    </select>
+    <button>Search</button>
+  </form>
+  <nav>
+    {% if session.get('user_id') %}
+      <a href="/listings/mine">My Listings</a>
+      <a href="/listings/new">Add</a>
+      <a href="/cart">Cart</a>
+      <a href="/purchases">Purchases</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Sign Up</a>
+    {% endif %}
+  </nav>
+</header>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash">
+      {% for m in messages %}<div>{{ m }}</div>{% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+<footer class="foot">© EcoFinds</footer>
+</body>
+</html>
